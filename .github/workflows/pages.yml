@@ -1,0 +1,45 @@
+name: Deploy Shanxi Travel Guide
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download original guide images
+        shell: bash
+        run: |
+          set -e
+          mkdir -p assets
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+          fetch(){ curl -L --fail --retry 3 --connect-timeout 20 -A "$UA" "$1" -o "$2"; }
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/1%20pingyao%20ancient%20city%20aerial%20pano%202019.jpg?width=1600' assets/pingyao.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Cave%2020%2C%20Yungang%20Grottoes.jpg?width=1200' assets/yungang.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Pagodaoffogongtemple2019.jpg?width=1200' assets/yingxian-pagoda.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Hanging%20Temple.jpg?width=1200' assets/hanging-temple.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Huayan%20Temple%20%28Datong%29%201.jpg?width=1200' assets/huayan.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Jinci%20Temple%2074094-Taiyuan%20%2849222882987%29.jpg?width=1200' assets/jinci.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Wang%20Family%20Courtyard%20%E7%8E%8B%E5%AE%B6%E5%A4%A7%E9%99%A2%20%286237012645%29.jpg?width=1200' assets/wang-courtyard.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Hukou%20Waterfall.jpg?width=1200' assets/hukou.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Yongle%20Palace%20-%20Chunyang%20Hall.JPG?width=1200' assets/yongle.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Guan%20Di%20Temple%20Yuncheng%20Shanxi.JPG?width=1200' assets/guandi.jpg
+          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Datong%20Daoxiaomian.jpg?width=900' assets/daoxiaomian.jpg
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

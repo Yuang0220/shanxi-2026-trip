@@ -201,7 +201,43 @@ body{overflow-x:hidden;-webkit-font-smoothing:antialiased;word-break:break-word}
   .day-grid:not(.full) .day-side .row{padding:1.5mm 2mm;border-right:1px solid var(--line);border-bottom:0}
   .day-grid:not(.full) .day-side .row:first-child{padding-left:0}.day-grid:not(.full) .day-side .row:last-child{border-right:0;padding-right:0}
 }
-</style><link rel="icon" type="image/svg+xml" href="favicon.svg"/><meta name="format-detection" content="telephone=no"/>
+</style>
+<style>
+/* WEATHER_MODULE_V1 */
+.trip-weather{margin:0 0 30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.22)}
+.trip-weather-header{display:flex;justify-content:flex-end;gap:10px;align-items:center;min-height:38px;padding:10px 0 7px;font-size:12px;color:var(--sub)}
+.trip-weather-status{color:var(--sub)}
+.trip-weather-grid-head,.trip-weather-row{display:grid;grid-template-columns:minmax(220px,1.6fr) minmax(80px,.7fr) 95px minmax(190px,1.1fr);gap:12px;align-items:center}
+.trip-weather-grid-head{padding:0 0 8px;border-bottom:1px solid var(--line);font-size:11px;color:var(--sub)}
+.trip-weather-row{min-height:50px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.trip-weather-row:last-child{border-bottom:0}
+.trip-weather-primary{display:flex;gap:7px;align-items:baseline;min-width:0}
+.trip-weather-date{white-space:nowrap;font-variant-numeric:tabular-nums}
+.trip-weather-separator{color:#aaa197}
+.trip-weather-place{min-width:0;overflow-wrap:anywhere}
+.trip-weather-condition{font-weight:600}
+.trip-weather-temperature{white-space:nowrap;font-variant-numeric:tabular-nums}
+.trip-weather-meta{display:grid;grid-template-columns:minmax(82px,1fr) minmax(100px,1.2fr);gap:10px;color:var(--sub);font-size:12px}
+.trip-weather-precipitation,.trip-weather-wind{white-space:nowrap}
+.trip-weather-fallback{margin:0;padding:14px 0;color:var(--sub);font-size:12px}
+.trip-weather-area{margin-bottom:0}
+@media screen and (max-width:760px){
+  .trip-weather{background:transparent}
+  .trip-weather-header{min-height:34px;padding:8px 0 5px;flex-wrap:wrap}
+  .trip-weather-grid-head{display:none}
+  .trip-weather-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"primary temperature" "condition meta";gap:3px 10px;min-height:0;padding:10px 0;font-size:13px;align-items:baseline}
+  .trip-weather-primary{grid-area:primary;min-width:0;gap:5px;line-height:1.45}
+  .trip-weather-place{line-height:1.45}
+  .trip-weather-condition{grid-area:condition;min-width:0;line-height:1.45;font-weight:500}
+  .trip-weather-temperature{grid-area:temperature;align-self:start;font-size:14px}
+  .trip-weather-meta{grid-area:meta;display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;line-height:1.45;font-size:12px}
+}
+@media print{
+  .trip-weather{margin-bottom:6mm}
+  .trip-weather-row{min-height:0;padding:2.2mm 0;font-size:9.5pt}
+  .trip-weather-grid-head,.trip-weather-meta{font-size:8.5pt}
+}
+</style><script defer src="weather.js"></script><link rel="icon" type="image/svg+xml" href="favicon.svg"/><meta name="format-detection" content="telephone=no"/>
 </head>
 <body>
 <nav class="screen-nav"><b>2026 山西家庭旅行</b><a href="#overview">总览</a><a href="#days">逐日</a><a href="#stay">住宿</a><a href="#food">美食</a><a href="#before">临行前</a></nav>
@@ -220,6 +256,24 @@ body{overflow-x:hidden;-webkit-font-smoothing:antialiased;word-break:break-word}
 <div class="kicker">01 · Overview</div><h2 class="section-title">先看结论</h2>
 <p class="big-note overview-lead">路线从大同向南至运城，固定酒店不变。9/26与9/30以转场和会合为主，10/1-10/4自驾。10/2、10/3预留更多交通缓冲。</p><div class="overview-balance"><div class="overview-actions"><div class="overview-action"><b>交通</b><span>10/1-10/4自驾；爸爸主驾，妈妈可轮换。10/2、10/3驾驶时间较长。</span></div><div class="overview-action"><b>预约</b><span>9/27 云冈、9/28 悬空寺登临（如妈妈想登）、10/3 小西天。</span></div><div class="overview-action"><b>机动项</b><span>遇交通延误时优先取消低优先级项目。</span></div><div class="overview-action"><b>天气</b><span>9月下旬至10月初昼夜温差明显；出发前7-10天更新逐日天气。</span></div></div><div class="facts"><div class="fact"><strong>9/10</strong><small>路线空间合理度</small></div><div class="fact"><strong>约812 km</strong><small>10/1-10/4原表自驾里程</small></div><div class="fact"><strong>10/2</strong><small>最容易超负荷</small></div><div class="fact"><strong>10/3</strong><small>交通波动最大</small></div></div></div>
 <div class="route-strip overview-route"><span>大同</span><i>→</i><span>应县 / 浑源</span><i>→</i><span>忻州</span><i>→</i><span>太原</span><i>→</i><span>平遥</span><i>→</i><span>洪洞 / 隰县</span><i>→</i><span>壶口</span><i>→</i><span>万荣 / 芮城</span><i>→</i><span>运城</span></div>
+</section>
+<section class="section" id="weather">
+<h2 class="section-title">02｜天气与装备</h2>
+<!-- WEATHER_MODULE_V1_START -->
+<h3>行程天气</h3>
+<div class="trip-weather" data-trip-weather>
+<div class="trip-weather-header"><span class="trip-weather-updated" data-trip-weather-updated></span><span class="trip-weather-status" data-trip-weather-status>正在更新天气…</span></div>
+<div class="trip-weather-grid-head" aria-hidden="true"><span>日期 / 行程地</span><span>天气</span><span>温度</span><span>降水 / 风</span></div>
+<div class="trip-weather-list" data-trip-weather-list role="list" aria-label="行程天气"><p class="trip-weather-fallback">天气暂时无法加载</p></div>
+</div>
+<!-- WEATHER_MODULE_V1_END -->
+<h3>区域体感与装备</h3>
+<table class="hotel-table trip-weather-area"><thead><tr><th>区域</th><th>旅行期体感背景</th><th>重点</th></tr></thead><tbody>
+<tr><td>大同 / 应县 / 浑源</td><td>9月下旬白天多为十几到20℃上下，早晚可能接近个位数；风感明显。</td><td>三层穿法：薄长袖 + 针织/抓绒 + 防风外套。</td></tr>
+<tr><td>太原 / 平遥</td><td>10月初典型昼夜温差较大，白天可舒适，早晚偏凉。</td><td>中午可脱层，古城夜游保留外套。</td></tr>
+<tr><td>隰县 / 吉县 / 壶口</td><td>比运城凉，壶口叠加水雾和风，体感可明显低于气温。</td><td>轻防水外套、防滑鞋、一次性雨衣、镜头布。</td></tr>
+<tr><td>万荣 / 芮城 / 运城</td><td>整体比北段温和。</td><td>继续分层，不需要因南段单独加厚重冬装。</td></tr>
+</tbody></table>
 </section>
 <section class="section">
 <div class="kicker">02 · Hard constraints</div><h2 class="section-title">已确定交通安排</h2>

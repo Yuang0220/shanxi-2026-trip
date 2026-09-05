@@ -107,6 +107,61 @@ jobs:
           test -s _site/with-images.html
           ! grep -R "commons.wikimedia.org" _site
 
+      - name: Responsive layout smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)"
+          test -n "$CHROME"
+          echo "Using $CHROME"
+
+          cat > _site/__audit.html <<'EOF'
+          <!doctype html><meta charset="utf-8"><title>AUDIT_RUNNING</title><body><pre id="results"></pre><script>
+          const widths=[1440,1200,980,430,390,375];
+          const results=[];
+          function fail(message){results.push('FAIL '+message)}
+          function inspect(width){return new Promise(resolve=>{
+            const frame=document.createElement('iframe');
+            frame.style.cssText=`position:absolute;left:-20000px;top:0;width:${width}px;height:1200px;border:0`;
+            frame.src='with-images.html?layout-audit='+width;
+            frame.onload=()=>setTimeout(()=>{
+              try{
+                const doc=frame.contentDocument, win=frame.contentWindow;
+                const scroll=doc.documentElement.scrollWidth, viewport=win.innerWidth;
+                if(scroll>viewport+1) fail(`${width}: horizontal overflow ${scroll}>${viewport}`);
+                const tiles=doc.querySelectorAll('.tile').length;
+                if(tiles<9) fail(`${width}: only ${tiles} image tiles`);
+                if(doc.querySelectorAll('#hotels .hotel').length<7) fail(`${width}: hotel content missing`);
+                if(doc.querySelectorAll('#food .food').length<6) fail(`${width}: food content missing`);
+                if(doc.querySelectorAll('a[href]').length<20) fail(`${width}: useful links missing`);
+                const hero=doc.querySelector('.hero');
+                if(!hero || !getComputedStyle(hero).backgroundImage.includes('landscape-sprite.webp')) fail(`${width}: hero image missing`);
+                const day929=[...doc.querySelectorAll('.day')].find(el=>el.textContent.includes('9/29'));
+                const single=day929?.querySelector('.gallery.one figure');
+                if(!single) fail(`${width}: 9/29 gallery missing`);
+                else if(width>760 && single.getBoundingClientRect().width>681) fail(`${width}: 9/29 portrait too wide`);
+                const font=parseFloat(getComputedStyle(doc.body).fontSize);
+                if(font<15) fail(`${width}: body font too small (${font}px)`);
+                results.push(`PASS ${width}: viewport=${viewport}, scroll=${scroll}, tiles=${tiles}`);
+              }catch(error){fail(`${width}: ${error.message}`)}
+              frame.remove();resolve();
+            },350);
+            document.body.append(frame);
+          })}
+          (async()=>{for(const width of widths)await inspect(width);document.getElementById('results').textContent=results.join('\n');document.body.dataset.done='yes';document.title=results.some(x=>x.startsWith('FAIL'))?'AUDIT_FAIL':'AUDIT_OK'})();
+          </script>
+          EOF
+
+          python3 -m http.server 4173 --directory _site >/tmp/shanxi-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          sleep 1
+          "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --virtual-time-budget=10000 --dump-dom http://127.0.0.1:4173/__audit.html > /tmp/layout-audit.html
+          grep -q '<title>AUDIT_OK</title>' /tmp/layout-audit.html
+          ! grep -q 'FAIL ' /tmp/layout-audit.html
+          sed -n '/PASS /p' /tmp/layout-audit.html
+          rm _site/__audit.html
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -114,3 +169,31 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify deployed files
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          fetch_live(){
+            local path="$1" out="$2"
+            curl --fail --location --silent --show-error --retry 10 --retry-delay 2 --retry-all-errors "${PAGE_URL}${path}?build=${GITHUB_SHA}" -o "$out"
+          }
+          fetch_live with-images.html /tmp/live-with-images.html
+          fetch_live index.html /tmp/live-index.html
+          fetch_live text-only.html /tmp/live-text-only.html
+          fetch_live assets/curated/landscape-sprite.webp /tmp/live-landscape.webp
+          fetch_live assets/curated/portrait-sprite.webp /tmp/live-portrait.webp
+
+          cmp _site/with-images.html /tmp/live-with-images.html
+          cmp _site/index.html /tmp/live-index.html
+          cmp _site/text-only.html /tmp/live-text-only.html
+          cmp _site/assets/curated/landscape-sprite.webp /tmp/live-landscape.webp
+          cmp _site/assets/curated/portrait-sprite.webp /tmp/live-portrait.webp
+
+          grep -q '华严寺' /tmp/live-with-images.html
+          grep -q '山西面食' /tmp/live-with-images.html
+          grep -q '常用链接' /tmp/live-with-images.html
+          ! grep -q 'commons.wikimedia.org' /tmp/live-with-images.html
+          echo "Live Pages files match the responsive-tested build: ${PAGE_URL}"

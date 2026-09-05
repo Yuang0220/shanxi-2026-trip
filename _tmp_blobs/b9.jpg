@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>2026 国庆山西家庭旅行手册</title>
+<style>
+@page { size:A4; margin:12mm 13mm 15mm; @bottom-right { content:"第 " counter(page) " 页"; font-size:8pt; color:#8b837a; } }
+:root{--ink:#22211f;--sub:#625c55;--paper:#fbfaf7;--sand:#eee7dd;--rust:#9a4938;--jade:#48685b;--gold:#9a7a3d;--line:#ded8cf;--white:#fff;}

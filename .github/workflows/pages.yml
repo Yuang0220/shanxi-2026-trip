@@ -1,15 +1,19 @@
 name: Deploy Shanxi Travel Guide
+
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: pages
   cancel-in-progress: true
+
 jobs:
   deploy:
     environment:
@@ -18,28 +22,95 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download original guide images
+
+      - name: Build final static site
         shell: bash
         run: |
-          set -e
-          mkdir -p assets
-          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
-          fetch(){ curl -L --fail --retry 3 --connect-timeout 20 -A "$UA" "$1" -o "$2"; }
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/1%20pingyao%20ancient%20city%20aerial%20pano%202019.jpg?width=1600' assets/pingyao.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Cave%2020%2C%20Yungang%20Grottoes.jpg?width=1200' assets/yungang.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Pagodaoffogongtemple2019.jpg?width=1200' assets/yingxian-pagoda.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Hanging%20Temple.jpg?width=1200' assets/hanging-temple.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Huayan%20Temple%20%28Datong%29%201.jpg?width=1200' assets/huayan.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Jinci%20Temple%2074094-Taiyuan%20%2849222882987%29.jpg?width=1200' assets/jinci.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Wang%20Family%20Courtyard%20%E7%8E%8B%E5%AE%B6%E5%A4%A7%E9%99%A2%20%286237012645%29.jpg?width=1200' assets/wang-courtyard.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Hukou%20Waterfall.jpg?width=1200' assets/hukou.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Yongle%20Palace%20-%20Chunyang%20Hall.JPG?width=1200' assets/yongle.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Guan%20Di%20Temple%20Yuncheng%20Shanxi.JPG?width=1200' assets/guandi.jpg
-          fetch 'https://commons.wikimedia.org/wiki/Special:FilePath/Datong%20Daoxiaomian.jpg?width=900' assets/daoxiaomian.jpg
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site/assets/curated
+          cp index.html text-only.html weather.js weather-rich.js favicon.svg 404.html _site/
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64
+
+          source = Path('.site-src')
+          output = Path('_site/assets/curated')
+
+          def build_webp(pattern, target):
+              parts = sorted(source.glob(pattern))
+              if not parts:
+                  raise SystemExit(f'No source chunks for {pattern}')
+              encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in parts)
+              try:
+                  raw = base64.b64decode(encoded, validate=True)
+              except Exception as exc:
+                  raise SystemExit(f'Invalid base64 for {target}: {exc}')
+              if not (raw.startswith(b'RIFF') and b'WEBP' in raw[:16]):
+                  raise SystemExit(f'{target} is not a WebP file')
+              (output / target).write_bytes(raw)
+              print(f'{target}: {len(raw)} bytes from {len(parts)} chunks')
+
+          build_webp('landscape-lite-*.b64', 'landscape-sprite.webp')
+          build_webp('portrait-lite-*.b64', 'portrait-sprite.webp')
+
+          part1 = (source / 'with-images-01.part').read_text(encoding='utf-8')
+          part2 = (source / 'with-images-02.part').read_text(encoding='utf-8')
+          html = part1 + part2
+
+          replacements = {
+              '<script defer src="weather.js"></script>': '<script defer src="weather-rich.js"></script>',
+              '.gallery.one{grid-template-columns:1fr}': '.gallery.one{grid-template-columns:minmax(0,680px);justify-content:center}',
+              'border-radius:18px;padding:26px 28px;margin:20px 0;box-shadow:0 5px 18px rgba(55,43,29,.045)': 'border-radius:9px;padding:26px 28px;margin:20px 0;box-shadow:0 2px 10px rgba(55,43,29,.03)',
+              'border-radius:14px;padding:17px 18px': 'border-radius:9px;padding:17px 18px',
+              'border-radius:16px;overflow:hidden': 'border-radius:9px;overflow:hidden',
+              '中秋假期末段，云冈预约和客流决定当天节奏': '云冈预约和客流决定当天节奏',
+              '晚上只逛古城、吃饭、泡温泉，给第二天太原会合留状态。': '晚上只逛古城、吃饭、泡温泉，早点休息。',
+              '<span class="status">恢复日</span>': '<span class="status">会合日</span>',
+              '<div class="day-sub">全程最容易超时的一天</div>': '<div class="day-sub">当天路程较长，王家大院和广胜寺优先</div>',
+              '<div class="info-card warn"><b>这天的减法</b>只砍大槐树，不动王家大院和广胜寺，判断会简单很多。</div>': '<div class="info-card warn"><b>时间不够时</b>直接取消大槐树，王家大院和广胜寺保留。</div>',
+              '<div class="info-card"><b>留余量</b>国庆返程客流大，去机场或车站的时间按高峰预留，不按平时导航最短时间算。</div>': '<div class="info-card"><b>返程时间</b>国庆返程客流大，去机场或车站多留一些时间，不按平时导航最短时间算。</div>',
+              '最后一晚用品牌酒店收尾，停车、早餐和第二天退房更省心。': '最后一晚入住希尔顿欢朋，停车、早餐和第二天退房都比较方便。'
+          }
+          for old, new in replacements.items():
+              if old not in html:
+                  print(f'warning: replacement source not found: {old[:60]}')
+              html = html.replace(old, new)
+
+          forbidden = [
+              'commons.wikimedia.org', '摄影', '机位', '构图', '出片', 'Live Photo',
+              '老人', '老年人', '高龄', '75 岁', '整理日期：2026-09-04',
+              '本文按截至', '暂未进入预报范围', 'KPI'
+          ]
+          hits = [word for word in forbidden if word in html]
+          if hits:
+              raise SystemExit('Forbidden content remains: ' + ', '.join(hits))
+
+          required = [
+              '应县木塔', '悬空寺', '华严寺', '晋祠', '平遥古城',
+              '壶口瀑布', '永乐宫', '解州关帝庙', '山西面食',
+              '玩途·代王邻里', '福田花雨温泉度假酒店', '卡曼·观博设计师酒店',
+              '恬雨轩·设计师·度假民宿', '凤凰泊岚酒店', '辰煜·臻选酒店',
+              '运城盐湖区希尔顿欢朋', '凤临阁', '凯鸽酒楼', '洪武记', '天元奎',
+              'weather-rich.js', 'portrait p8', 'landscape l2'
+          ]
+          missing = [item for item in required if item not in html]
+          if missing:
+              raise SystemExit('Required rich-guide content missing: ' + ', '.join(missing))
+
+          (Path('_site') / 'with-images.html').write_text(html, encoding='utf-8')
+          PY
+
+          test -s _site/assets/curated/landscape-sprite.webp
+          test -s _site/assets/curated/portrait-sprite.webp
+          test -s _site/with-images.html
+          ! grep -R "commons.wikimedia.org" _site
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

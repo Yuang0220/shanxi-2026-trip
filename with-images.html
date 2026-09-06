@@ -1,27 +1,170 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>2026 国庆山西家庭旅行手册｜图文版</title><style>body{margin:0;background:#f5f1e9;color:#282724;font:16px/1.7 "Microsoft YaHei","PingFang SC",Arial,sans-serif}.loading{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center}.loading p{color:#716b62}</style></head><body><div class="loading"><div><strong>2026 国庆山西家庭旅行手册</strong><p>正在打开图文版…</p></div></div><script>
-(async()=>{
-  try{
-    const urls=['.site-src/with-images-01.part','.site-src/with-images-02.part'];
-    const parts=await Promise.all(urls.map(async url=>{const r=await fetch(url,{cache:'no-cache'});if(!r.ok)throw new Error(url);return r.text()}));
-    let html=parts.join('');
-    const replacements=new Map([
-      ['<script defer src="weather.js"></script>','<script defer src="weather-rich.js"></script>'],
-      ['.gallery.one{grid-template-columns:1fr}','.gallery.one{grid-template-columns:minmax(0,680px);justify-content:center}'],
-      ['border-radius:18px;padding:26px 28px;margin:20px 0;box-shadow:0 5px 18px rgba(55,43,29,.045)','border-radius:9px;padding:26px 28px;margin:20px 0;box-shadow:0 2px 10px rgba(55,43,29,.03)'],
-      ['border-radius:14px;padding:17px 18px','border-radius:9px;padding:17px 18px'],
-      ['border-radius:16px;overflow:hidden','border-radius:9px;overflow:hidden'],
-      ['中秋假期末段，云冈预约和客流决定当天节奏','云冈预约和客流决定当天节奏'],
-      ['晚上只逛古城、吃饭、泡温泉，给第二天太原会合留状态。','晚上只逛古城、吃饭、泡温泉，早点休息。'],
-      ['<span class="status">恢复日</span>','<span class="status">会合日</span>'],
-      ['<div class="day-sub">全程最容易超时的一天</div>','<div class="day-sub">当天路程较长，王家大院和广胜寺优先</div>'],
-      ['<div class="info-card warn"><b>这天的减法</b>只砍大槐树，不动王家大院和广胜寺，判断会简单很多。</div>','<div class="info-card warn"><b>时间不够时</b>直接取消大槐树，王家大院和广胜寺保留。</div>'],
-      ['<div class="info-card"><b>留余量</b>国庆返程客流大，去机场或车站的时间按高峰预留，不按平时导航最短时间算。</div>','<div class="info-card"><b>返程时间</b>国庆返程客流大，去机场或车站多留一些时间，不按平时导航最短时间算。</div>'],
-      ['最后一晚用品牌酒店收尾，停车、早餐和第二天退房更省心。','最后一晚入住希尔顿欢朋，停车、早餐和第二天退房都比较方便。']
-    ]);
-    for(const [from,to] of replacements)html=html.split(from).join(to);
-    document.open();document.write(html);document.close();
-  }catch(error){
-    document.querySelector('.loading p').textContent='图文版构建源读取失败，请返回入口页使用纯文字版。';
-  }
-})();
-</script></body></html>
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>2026 国庆山西家庭旅行手册</title>
+<style>
+@page { size:A4; margin:12mm 13mm 15mm; @bottom-right { content:"第 " counter(page) " 页"; font-size:8pt; color:#8b837a; } }
+:root{--ink:#22211f;--sub:#625c55;--paper:#fbfaf7;--sand:#eee7dd;--rust:#9a4938;--jade:#48685b;--gold:#9a7a3d;--line:#ded8cf;--white:#fff;}
+*{box-sizing:border-box} html{scroll-behavior:smooth;background:#e9e5df} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.7;font-size:15px}
+a{color:#7f4336;text-decoration:none;border-bottom:1px solid #cdbbb2} a:hover{color:#9a4938}
+.screen-nav{position:sticky;top:0;z-index:10;background:rgba(251,250,247,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 20px;display:flex;gap:18px;align-items:center;font-size:13px} .screen-nav b{margin-right:auto} .screen-nav a{border:0;color:var(--sub)}
+.page{max-width:1040px;margin:auto;padding:38px 44px} .section{margin:55px 0} .kicker{font-size:12px;letter-spacing:.18em;color:var(--rust);text-transform:uppercase;margin-bottom:8px} h1,h2,h3{font-family:Georgia,"Songti SC","SimSun",serif;line-height:1.23;margin:0} h1{font-size:46px;font-weight:600} h2{font-size:27px;font-weight:600;margin-bottom:16px} h3{font-size:19px;font-weight:600;margin-bottom:8px} p{margin:7px 0 12px} .muted{color:var(--sub)}
+.cover{max-width:1040px;margin:0 auto;padding:34px 44px 54px} .cover-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:32px;align-items:end;min-height:620px} .cover-copy{padding:30px 0} .cover-copy .subtitle{font-size:18px;color:var(--sub);max-width:520px;margin:22px 0} .cover-meta{border-top:1px solid var(--line);padding-top:16px;color:var(--sub);font-size:13px} .mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:240px 180px;gap:8px} .mosaic img{width:100%;height:100%;object-fit:cover;display:block} .mosaic img:first-child{grid-column:1/3} .mosaic .portrait{object-position:center 38%}
+.rule{height:1px;background:var(--line);margin:22px 0}
+.lead-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:start} .big-note{font-family:Georgia,"Songti SC","SimSun",serif;font-size:24px;line-height:1.5;color:#3a3530} .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px} .fact{padding:14px 15px;border-top:3px solid var(--rust);background:#f4f0ea} .fact strong{font-size:20px;display:block} .fact small{color:var(--sub)}
+.route-strip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:18px 0 8px} .route-strip span{padding:5px 8px;background:#f2ede6;border:1px solid var(--line);font-size:12px} .route-strip i{font-style:normal;color:#9c948a}
+.decision{border-left:3px solid var(--jade);padding:12px 16px;background:#f1f5f2;margin:20px 0} .decision b{color:var(--jade)}
+.day{border-top:1px solid #beb6ac;padding-top:26px;margin:44px 0} .day-head{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:baseline;margin-bottom:18px} .date{font-family:Georgia,"Times New Roman",serif;font-size:27px;color:var(--rust)} .route{font-size:27px;font-family:Georgia,"Songti SC","SimSun",serif} .day-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:28px;align-items:start} .day-grid.with-photo{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)} .day h4{margin:0 0 6px;font-size:13px;color:var(--rust);letter-spacing:.05em} .clean{margin:0;padding-left:1.1em} .clean li{margin:5px 0} .day-side{border-left:1px solid var(--line);padding-left:20px} .day-side .row{padding:8px 0;border-bottom:1px solid #e8e2da} .day-side b{display:block;font-size:12px;color:var(--jade)}
+.photo{margin:0 0 16px} .photo img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;background:#f6f2ec;border-radius:10px} .photo figcaption{font-size:11px;color:#766f67;padding-top:7px} .photo.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px} .photo.duo img{height:220px;object-fit:cover} .photo.focus img{max-width:680px;margin:0 auto} .photo.inline img{max-width:560px;margin:0 auto}
+.tipbar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0} .tip{padding:10px 12px;background:#f4f0ea} .tip b{display:block;font-size:11px;color:var(--rust)} .tip span{font-size:13px}
+.weather-box{margin:18px 0 8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0 0}.weather-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin:0 0 10px}.weather-top .label{font-size:13px;color:var(--sub)}.weather-top .updated{font-size:13px;color:var(--sub)}.weather-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:0}.weather-head,.weather-row{display:contents}.weather-grid div{padding:12px 10px;border-bottom:1px solid #ece6de}.weather-grid .th{font-size:12px;color:var(--sub);font-weight:700}.weather-grid .place{font-weight:600}.weather-note{margin:10px 0 0;font-size:12px;color:#756d64}.weather-grid .muted{color:#756d64}.weather-grid .temp{white-space:nowrap}.weather-grid .wx{white-space:nowrap}.weather-grid .pw{white-space:nowrap}@media(max-width:820px){.day-grid,.day-grid.with-photo,.food-feature,.lead-grid{grid-template-columns:1fr}.day-side{border-left:none;padding-left:0}.tipbar,.tipbar.two{grid-template-columns:1fr}.weather-grid{grid-template-columns:1.6fr 1fr 1fr 1fr}.weather-grid div{padding:10px 8px}.weather-top{display:block}.weather-top .updated{margin-top:6px}}
+.cut{margin-top:14px;padding:11px 14px;border-left:3px solid var(--gold);background:#faf6ed;font-size:13px} .cut b{color:#80621f}
+.hotel-table,.food-table{width:100%;border-collapse:collapse;font-size:13px} .hotel-table th,.hotel-table td,.food-table th,.food-table td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top} .hotel-table th,.food-table th{font-size:11px;color:var(--sub);letter-spacing:.04em} .hotel-table td:first-child,.food-table td:first-child{font-weight:700}
+.food-feature{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:20px 0} .food-feature .photo img{height:230px} .food-feature h3{font-size:18px} .price{font-size:12px;color:var(--sub)}
+.checklist{columns:2;column-gap:40px} .checklist p{break-inside:avoid;margin:0 0 14px;padding-left:18px;position:relative} .checklist p:before{content:"□";position:absolute;left:0;color:var(--rust)}
+.sources{font-size:11px;color:var(--sub)} .sources li{margin:5px 0;overflow-wrap:anywhere}
+.footer{border-top:1px solid var(--line);padding-top:16px;color:#8b837a;font-size:11px;margin-top:40px}
+@media print{html,body{background:#fff!important} body{font-size:10.2pt} .screen-nav{display:none} .cover{break-after:page;padding:5mm 2mm 8mm} .cover-grid{min-height:245mm} .page{max-width:none;padding:0} .section{margin:8mm 0} h1{font-size:34pt} h2{font-size:22pt} h3{font-size:15pt} .day{margin:7mm 0;padding-top:5mm} .day-head{grid-template-columns:28mm 1fr} .date,.route{font-size:18pt} .photo{break-inside:avoid} .food-feature,.lead-grid,.day-grid{break-inside:auto} .hotel-table tr,.food-table tr{break-inside:avoid} .section-title{break-after:avoid} .day-head{break-after:avoid} .cut,.decision,.tip{break-inside:avoid} .footer{font-size:8pt}}
+@media screen and (max-width:760px){.page,.cover{padding:24px 18px} .cover-grid,.lead-grid,.day-grid,.day-grid.with-photo,.food-feature{grid-template-columns:1fr} .mosaic{grid-template-rows:180px 145px} h1{font-size:38px} h2{font-size:27px} .facts{grid-template-columns:1fr 1fr} .day-head{grid-template-columns:1fr;gap:2px} .day-side{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:10px} .tipbar{grid-template-columns:1fr} .checklist{columns:1} .screen-nav a{display:none}}
+
+
+/* V7 refined high-resolution image layout */
+.cover-grid{grid-template-columns:minmax(0,1fr) minmax(360px,.9fr);align-items:center;min-height:0}
+.mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:280px 190px;gap:12px}
+.mosaic img{width:100%;height:100%;display:block;object-fit:cover;border-radius:10px;background:#f2eee8}
+.mosaic img:first-child{grid-column:1/3}.mosaic img:nth-child(2){object-position:center 38%}.mosaic img:nth-child(3){object-position:center 58%}
+.photo{margin:16px 0 12px}.photo img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;background:#f4f1ec;border-radius:10px}.photo figcaption{font-size:11px;color:#766f67;padding-top:7px}
+.day-gallery{display:grid;gap:14px;max-width:960px;margin:20px auto 6px;align-items:start}
+.day-gallery figure{margin:0;min-width:0;display:flex;flex-direction:column;height:100%;padding:10px;background:#fff;border:1px solid #e4ddd3;border-radius:14px;box-shadow:0 6px 16px rgba(34,33,31,.04)}
+.day-gallery img{width:100%;height:auto;display:block;border-radius:10px;background:#f4f1ec}
+.day-gallery figcaption{font-size:11px;color:#766f67;margin-top:8px;line-height:1.45;min-height:2.8em}
+.gallery-928{grid-template-columns:1fr 1fr;align-items:start}.gallery-928 .left-stack,.gallery-928 .right-stack{display:grid;gap:14px;align-content:start}
+.gallery-928 .left-stack figure,.gallery-928 .right-stack figure{height:auto}
+.gallery-928 .left-stack img,.gallery-928 .right-stack img{aspect-ratio:4/3;object-fit:cover}
+.gallery-928 .left-stack figure:nth-child(1) img{object-position:center 15%}
+.gallery-928 .left-stack figure:nth-child(2) img{object-position:center 32%}
+.gallery-928 .right-stack figure:nth-child(1) img{object-position:center 56%}
+.gallery-928 .right-stack figure:nth-child(2) img{object-position:center 50%}
+.gallery-929,.gallery-101{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
+.gallery-929 img,.gallery-101 img{aspect-ratio:4/5;object-fit:cover}
+.gallery-929 figure:nth-child(1) img{object-position:center 36%}
+.gallery-929 figure:nth-child(2) img{object-position:center 48%}
+.gallery-929 figure:nth-child(3) img{object-position:center 35%}
+.gallery-101 figure:nth-child(1) img{object-position:center 42%}
+.gallery-101 figure:nth-child(2) img{object-position:center 48%}
+.gallery-101 figure:nth-child(3) img{object-position:center 56%}
+.gallery-single{grid-template-columns:minmax(0,680px);justify-content:center}.gallery-single figure{width:min(100%,680px);margin-inline:auto}.gallery-single img{max-height:760px;object-fit:cover;border-radius:10px}
+.food-photo-feature{display:grid;grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr);gap:26px;align-items:center;margin:18px 0 24px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.food-photo-feature .photo{margin:0}.food-photo-feature .photo figure,.food-photo-feature .photo{margin:0}.food-photo-feature .photo{padding:10px;background:#fff;border:1px solid #e4ddd3;border-radius:14px;box-shadow:0 6px 16px rgba(34,33,31,.04)}
+.food-photo-feature img{width:100%;height:auto;display:block;border-radius:10px}.food-photo-feature h3{margin-bottom:8px}.food-photo-feature p{color:var(--sub)}
+.weather-grid .pw{white-space:normal}.weather-grid .muted{color:#746d65}
+@media screen and (max-width:760px){.cover-grid{grid-template-columns:1fr}.mosaic{grid-template-rows:210px 150px}.gallery-928,.gallery-929,.gallery-101,.food-photo-feature{grid-template-columns:1fr}.gallery-929 img,.gallery-101 img,.gallery-928 .left-stack img,.gallery-928 .right-stack img{aspect-ratio:auto!important;object-fit:contain!important}.day-gallery{gap:10px;max-width:none}.day-gallery figure{padding:8px}.gallery-single{grid-template-columns:1fr}}
+@media print{.day-gallery,.food-photo-feature{break-inside:avoid}.gallery-929,.gallery-101{gap:3mm}.day-gallery img{max-height:92mm;object-fit:contain}.gallery-928 img{max-height:85mm}.food-photo-feature img{max-height:95mm;object-fit:contain}.day-gallery figure,.food-photo-feature .photo{box-shadow:none}}
+</style>
+</head>
+<body>
+<nav class="screen-nav"><b>2026 山西家庭旅行</b><a href="#overview">总览</a><a href="#days">逐日</a><a href="#stay">住宿</a><a href="#food">美食</a><a href="#before">临行前</a></nav>
+<header class="cover">
+<div class="cover-grid">
+<div class="cover-copy">
+<div class="kicker">Shanxi · 26 Sep - 5 Oct 2026</div>
+<h1>国庆山西<br/>家庭旅行手册</h1>
+<p class="subtitle">石窟 · 古建 · 古城 · 彩塑 · 黄河</p>
+<div class="cover-meta">南京 → 大同 → 忻州 → 太原 → 平遥 → 隰县 → 万荣 → 运城 → 南京<br/>整理日期：2026-09-04 · 最终动态信息以临行前官方公告与订单为准</div>
+</div>
+<div class="mosaic"><img alt="悬空寺｜崖壁整体" decoding="async" fetchpriority="high" src="assets/images/xuankongsi-01.webp"/><img alt="应县木塔" decoding="async" loading="lazy" src="assets/images/yingxian-muta-01.webp"/><img alt="壶口瀑布" decoding="async" loading="lazy" src="assets/images/hukou-01.webp"/></div>
+</div>
+</header>
+<main class="page">
+<section class="section" id="overview">
+<div class="kicker">01 · Overview</div><h2 class="section-title">先看结论</h2>
+<div class="lead-grid"><div><p class="big-note">路线从大同向南至运城，固定酒店不变。9/26与9/30以转场和会合为主，10/1-10/4自驾。10/2、10/3预留更多交通缓冲。</p>
+<div class="decision"><b>交通</b>：10/1-10/4自驾，爸爸主驾、妈妈可轮换。10/2、10/3驾驶时间较长。</div>
+</div><div class="facts"><div class="fact"><strong>9/10</strong><small>路线空间合理度</small></div><div class="fact"><strong>约812 km</strong><small>10/1-10/4原表自驾里程</small></div><div class="fact"><strong>10/2</strong><small>最容易超负荷</small></div><div class="fact"><strong>10/3</strong><small>交通波动最大</small></div></div></div>
+<div class="route-strip"><span>大同</span><i>→</i><span>应县 / 浑源</span><i>→</i><span>忻州</span><i>→</i><span>太原</span><i>→</i><span>平遥</span><i>→</i><span>洪洞 / 隰县</span><i>→</i><span>壶口</span><i>→</i><span>万荣 / 芮城</span><i>→</i><span>运城</span></div>
+<div class="tipbar"><div class="tip"><b>预约</b><span>9/27 云冈、9/28 悬空寺登临（如妈妈想登）、10/3 小西天。</span></div><div class="tip"><b>机动项</b><span>遇交通延误时优先取消低优先级项目。</span></div><div class="tip"><b>天气</b><span>9月下旬至10月初昼夜温差明显；出发前7-10天更新逐日天气。</span></div></div>
+</section>
+<section class="section">
+<div class="kicker">02 · Hard constraints</div><h2 class="section-title">已确定交通安排</h2>
+<table class="hotel-table"><thead><tr><th>日期</th><th>刚性安排</th><th>备注</th></tr></thead><tbody>
+<tr><td>9/26</td><td>G469 南京南 14:23 → 大同南 21:57</td><td>到站后直接入住。</td></tr>
+<tr><td>9/30</td><td>爸爸南京 → 太原，原计划 HO2325 18:50 → 20:45</td><td>妈妈和奶奶先到太原；晚上只会合、休息。</td></tr>
+<tr><td>10/1-10/4</td><td>三人自驾，爸爸主驾、妈妈可轮换</td><td>10/2-10/3驾驶时间较长，预留休息和轮换。</td></tr>
+<tr><td>10/5</td><td>运城返南京，原计划约 10:20 → 12:10</td><td>预留还车、行李和安检时间。</td></tr>
+</tbody></table>
+</section>
+<section class="section" id="weather">
+<div class="kicker">03 · Weather</div><h2 class="section-title">当前天气参考</h2>
+<div class="weather-box">
+<div class="weather-top"><div class="label">当前先显示完整远期参考，不留空；进入更近预报窗口后自动更新。</div><div class="updated">更新于 9月5日 21:05</div></div>
+<div aria-label="山西行程天气参考" class="weather-grid" role="table">
+<div class="th">日期 / 行程地</div><div class="th">天气</div><div class="th">温度</div><div class="th">降水 / 风</div>
+<div class="place">9/26 · 大同</div><div class="wx muted">远期参考</div><div class="temp">4–16℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">9/27 · 大同</div><div class="wx muted">远期参考</div><div class="temp">5–16℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">9/28 · 应县 / 浑源</div><div class="wx muted">远期参考</div><div class="temp">9–21℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">9/29 · 大同 → 忻州</div><div class="wx muted">远期参考</div><div class="temp">9–19℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">9/30 · 忻州 → 太原</div><div class="wx muted">远期参考</div><div class="temp">9–21℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">10/1 · 太原 → 平遥</div><div class="wx muted">远期参考</div><div class="temp">9–23℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">10/2 · 平遥 → 洪洞 → 隰县</div><div class="wx muted">远期参考</div><div class="temp">7–25℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">10/3 · 隰县 → 壶口 → 万荣</div><div class="wx muted">远期参考</div><div class="temp">7–19℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">10/4 · 万荣 → 芮城 → 运城</div><div class="wx muted">远期参考</div><div class="temp">13–22℃</div><div class="pw muted">等待逐日预报</div>
+<div class="place">10/5 · 运城</div><div class="wx muted">远期参考</div><div class="temp">10–23℃</div><div class="pw muted">等待逐日预报</div>
+</div>
+<p class="weather-note">现在先显示完整的远期参考值；进入逐日预报窗口后，页面会自动替换天气、温度、降水概率和风速。</p>
+</div>
+</section>
+<section class="section" id="days">
+<div class="kicker">04 · Day by day</div><h2 class="section-title">逐日执行</h2>
+<div class="day"><div class="day-head"><div class="date">9/26</div><div class="route">南京 → 大同</div></div><div class="day-grid"><div><h4>行程</h4><ul class="clean"><li>G469 14:23-21:57，铁路约7小时34分。</li><li>到大同南后直接接送、入住。</li><li>车上分段喝水、适当活动；到店后简单用餐，确认9/27预约。</li></ul></div><div class="day-side"><div class="row"><b>奶奶</b>靠垫、薄外套和易取零食放手边；车上适当活动腿脚。</div><div class="row"><b>风险</b>中秋假期车站与接送有波动。</div><div class="row"><b>晚餐</b>酒店附近热汤、蔬菜、清淡主食。</div></div></div></div>
+<div class="day"><div class="day-head"><div class="date">9/27</div><div class="route">云冈石窟 → 大同博物馆 → 古城散步</div></div><div class="day-grid with-photo with-photo"><div><h4>安排</h4><ul class="clean"><li><b>云冈石窟</b>预留约2.5-3.5小时，重点看核心洞窟与第20窟。</li><li>大同博物馆安排在云冈之后；晚间视体力在古城散步。</li><li>云冈实名预约提前确认。</li></ul><div class="cut"><b>机动调整</b>：时间不足时先取消晚间古城，再取消博物馆。</div></div><figure class="photo"><img alt="云冈石窟｜第20窟" decoding="async" loading="lazy" src="assets/images/yungang-20.jpg"/><figcaption>云冈石窟｜第20窟露天佛</figcaption></figure></div><div class="tipbar"><div class="tip"><b>吃什么</b><span>刀削面、浑源凉粉择一，再配热菜。</span></div><div class="tip"><b>餐厅</b><span>凤临阁等位过长时改凯鸽。</span></div></div></div>
+<div class="day"><div class="day-head"><div class="date">9/28</div><div class="route">应县木塔 → 净土寺 → 悬空寺整体 → 永安寺</div></div><div class="day-grid with-photo"><div><h4>安排</h4><ul class="clean"><li>木塔 + 悬空寺整体 + 永安寺为主；净土寺、圆觉寺承担机动。</li><li>悬空寺以山下整体观景为主；登临按预约、天气和现场状态决定。</li><li>停车、摆渡、候车时间另计。</li></ul><div class="cut"><b>机动调整</b>：圆觉寺 → 净土寺 → 缩短永安寺；木塔与悬空寺整体保留。</div></div></div><div class="day-gallery gallery-928"><div class="left-stack"><figure class="photo"><img alt="应县木塔｜正面塔身" decoding="async" loading="lazy" src="assets/images/yingxian-muta-01.webp"/><figcaption>应县木塔｜完整塔身</figcaption></figure><figure class="photo"><img alt="应县木塔｜林木取景" decoding="async" loading="lazy" src="assets/images/yingxian-muta-02.webp"/><figcaption>应县木塔｜林木间的塔身</figcaption></figure></div><div class="right-stack"><figure class="photo"><img alt="悬空寺｜崖壁全景" decoding="async" loading="lazy" src="assets/images/xuankongsi-01.webp"/><figcaption>悬空寺｜崖壁与寺院整体关系</figcaption></figure><figure class="photo"><img alt="悬空寺｜局部全景" decoding="async" loading="lazy" src="assets/images/xuankongsi-02.webp"/><figcaption>悬空寺｜栈道与殿宇</figcaption></figure></div></div><div class="tipbar"><div class="tip"><b>餐饮</b><span>应县/浑源就近热菜和面食，停车方便优先。</span></div></div></div>
+<div class="day"><div class="day-head"><div class="date">9/29</div><div class="route">华严寺 → 善化寺 → 九龙壁 → 忻州</div></div><div class="day-grid with-photo"><div><h4>安排</h4><ul class="clean"><li>华严寺、善化寺、九龙壁。</li><li>代王府、乾楼放到9/27晚或取消。</li><li>下午转忻州，按订单预留进站时间。</li></ul><div class="cut"><b>机动调整</b>：时间不足时保留华严寺，善化寺 / 九龙壁二选一。</div></div></div><div class="day-gallery gallery-929"><figure class="photo"><img alt="大同古城寺院古建｜塔楼细节" decoding="async" loading="lazy" src="assets/images/datong-ancient-01.webp"/><figcaption>大同古城古建｜塔楼与屋檐</figcaption></figure><figure class="photo"><img alt="大同古城寺院古建｜正面建筑" decoding="async" loading="lazy" src="assets/images/datong-ancient-02.webp"/><figcaption>大同古城古建｜寺院建筑</figcaption></figure><figure class="photo"><img alt="大同古城寺院古建｜楼阁" decoding="async" loading="lazy" src="assets/images/datong-ancient-03.webp"/><figcaption>大同古城古建｜楼阁细节</figcaption></figure></div></div>
+<div class="day"><div class="day-head"><div class="date">9/30</div><div class="route">忻州恢复 → 太原会合</div></div><div class="day-grid"><div><h4>安排</h4><ul class="clean"><li>上午忻州古城短逛；妈妈和奶奶转太原后休息。</li><li>爸爸晚间按原航班到太原，会合后直接休息。</li><li>安排洗衣、充电，核对证件和预约。</li></ul></div><div class="day-side"><div class="row"><b>奶奶</b>午后休息，晚餐宜早。</div><div class="row"><b>爸爸</b>到达后直接休息，第二天开始自驾。</div><div class="row"><b>吃饭</b>酒店 / 吾悦广场附近用餐。</div></div></div></div>
+<div class="day"><div class="day-head"><div class="date">10/1</div><div class="route">晋祠 → 镇国寺（机动）→ 双林寺 → 平遥</div></div><div class="day-grid with-photo"><div><h4>国庆首日</h4><ul class="clean"><li>晋祠 + 双林寺；镇国寺为机动项。</li><li>普通导航约1h47；国庆按2.5-3.5h并加停车缓冲。</li><li>入住后视体力决定是否夜间散步。</li></ul><div class="cut"><b>机动调整</b>：交通延误先取消镇国寺；严重拥堵时晋祠后直接前往平遥。</div></div></div><div class="day-gallery gallery-101"><figure class="photo"><img alt="晋祠｜银杏与殿宇" decoding="async" loading="lazy" src="assets/images/jinci-01.webp"/><figcaption>晋祠｜秋色与古建</figcaption></figure><figure class="photo"><img alt="晋祠｜殿门与石狮" decoding="async" loading="lazy" src="assets/images/jinci-02.webp"/><figcaption>晋祠｜殿门与院落</figcaption></figure><figure class="photo"><img alt="平遥古城｜南大街傍晚" decoding="async" loading="lazy" src="assets/images/pingyao-evening.jpg"/><figcaption>平遥古城｜南大街傍晚</figcaption></figure></div></div>
+<div class="day"><div class="day-head"><div class="date">10/2</div><div class="route">王家大院 → 广胜寺 → 大槐树（机动）→ 隰县</div></div><div class="day-grid with-photo"><div><h4>高负荷日</h4><ul class="clean"><li>王家大院 + 广胜寺；大槐树为机动项。</li><li>约291km；普通导航约4h04，国庆按5-6h+准备。</li><li>王家大院以主院落为主；广胜寺按开放区域参观。</li></ul><div class="cut"><b>机动调整</b>：路况、天气或状态不佳时取消大槐树；必要时王家大院 / 广胜寺二选一。</div></div></div><div class="day-gallery gallery-single"><figure class="photo"><img alt="王家大院｜层叠院落" decoding="async" loading="lazy" src="assets/images/wangjia-dayuan-01.webp"/><figcaption>王家大院｜灰瓦与院落层次</figcaption></figure></div><div class="tipbar"><div class="tip"><b>爸爸</b><span>上午主驾；王家之后妈妈可主动接一段，别等疲劳明显才换。</span></div><div class="tip"><b>吃饭</b><span>这天餐饮服从交通；能快速坐下、有热菜、有卫生间即可。</span></div><div class="tip"><b>到店</b><span>到隰县后不再加任何景点，保证睡眠。</span></div></div></div>
+<div class="day"><div class="day-head"><div class="date">10/3</div><div class="route">小西天 → 壶口瀑布 → 万荣</div></div><div class="day-grid with-photo"><div><h4>高客流日</h4><ul class="clean"><li>小西天 + 壶口；万荣只安排入住。</li><li>约253km；普通导航约3h11，国庆按4-5.5h并加停车、摆渡缓冲。</li><li>小西天窄台阶停留时间宜短；壶口在安全栏杆内观景。</li></ul><div class="cut"><b>备选</b>：严重拥堵或天气不佳时取消壶口，隰县直达万荣。</div></div></div><div class="day-gallery gallery-single"><figure class="photo"><img alt="壶口瀑布｜黄河水势" decoding="async" loading="lazy" src="assets/images/hukou-01.webp"/><figcaption>壶口瀑布｜黄河峡谷与水势</figcaption></figure></div></div>
+<div class="day"><div class="day-head"><div class="date">10/4</div><div class="route">飞云楼 → 永乐宫 → 广仁王庙（机动）→ 解州关帝庙 → 运城</div></div><div class="day-grid with-photo"><div><h4>晋南古建</h4><ul class="clean"><li>永乐宫为首要景点；飞云楼、关帝庙保留，广仁王庙为机动项。</li><li>约157km；普通导航约2h17，国庆按2.5-3.5h准备。</li></ul></div></div><div class="day-gallery gallery-single"><figure class="photo"><img alt="飞云楼｜正面全景" decoding="async" loading="lazy" src="assets/images/feiyunlou.jpg"/><figcaption>飞云楼｜正面全景</figcaption></figure></div></div>
+<div class="day"><div class="day-head"><div class="date">10/5</div><div class="route">运城 → 南京</div></div><div class="day-grid"><div><h4>返程日</h4><ul class="clean"><li>按原计划航班约10:20-12:10返南京，最终以订单为准。</li><li>早餐后前往机场 / 车站，预留还车、行李和安检时间。</li><li>前一晚整理证件、充电器、药品和发票。</li></ul></div><div class="day-side"><div class="row"><b>奶奶</b>早餐少量热食，候机优先找座。</div><div class="row"><b>驾驶</b>按导航前往交通节点，先完成还车 / 停车。</div><div class="row"><b>返程</b>预留还车、行李和安检时间。</div></div></div></div>
+</section>
+<section class="section" id="stay"><div class="kicker">05 · Stay</div><h2 class="section-title">住宿安排</h2>
+<table class="hotel-table"><thead><tr><th>住宿</th><th>表内价格 / 设施</th><th>入住前确认</th></tr></thead><tbody>
+<tr><td><a href="https://hotels.ctrip.com/hotels/133206789.html">玩途·代王邻里｜大同古城</a></td><td>约¥1,192 / 约3晚；古城内、庭院、行李寄存</td><td>少楼梯、离出入口方便的房型；古城内上下车点。</td></tr>
+<tr><td><a href="https://m.ctrip.com/html5/hotel/hoteldetail/125751891.html">福田花雨温泉度假酒店｜忻州古城</a></td><td>约¥599；温泉、停车、近古城</td><td>温泉开放时段、早餐和安静房。</td></tr>
+<tr><td><a href="https://hotels.ctrip.com/hotels/128126988.html">卡曼·观博设计师酒店｜太原</a></td><td>约¥512；停车、洗衣、高层</td><td>安静房、上下车位置；晚餐在酒店周边。</td></tr>
+<tr><td><a href="https://hotels.ctrip.com/hotels/130200502.html">恬雨轩·设计师·度假民宿｜平遥</a></td><td>约¥488；古城内、管家、行李接送</td><td><b>停车场 + 城门 + 行李接驳</b>；提前确认停车场、接驳城门和行李接送。</td></tr>
+<tr><td>凤凰泊岚酒店｜隰县</td><td>约¥623；早餐、停车/充电、距小西天近</td><td>奶奶和行李先门口下，再由驾驶员停车；确认停车位置。</td></tr>
+<tr><td><a href="https://hotels.ctrip.com/hotels/133185354.html">辰煜·臻选酒店｜万荣</a></td><td>约¥338；停车、电梯、洗衣/烘干</td><td>确认停车、电梯、洗衣 / 烘干和早餐。</td></tr>
+<tr><td><a href="https://www.hilton.com/zh-hans/hotels/ycunchx-hampton-yuncheng-yanhu/hotel-info/">运城盐湖希尔顿欢朋</a></td><td>约¥716；早餐、停车、洗衣、品牌标准化</td><td>核对房型、早餐、停车和返程方向。</td></tr>
+</tbody></table>
+<div class="decision"><b>房型与总价</b>：原表酒店约¥4,468；最终以订单的房间数、入住人数和早餐政策为准。</div>
+</section>
+<section class="section" id="food"><div class="kicker">06 · Food</div><h2 class="section-title">餐饮推荐</h2>
+
+
+<div class="food-photo-feature"><figure class="photo"><img alt="山西面食｜热汤面" decoding="async" loading="lazy" src="assets/images/shanxi-noodles-01.webp"/><figcaption>山西面食｜热汤、面食和家常菜优先</figcaption></figure><div><h3>山西面食</h3><p>转场多的几天，优先选热汤、面食和家常菜。比起追店，停车方便、能尽快坐下更重要。</p></div></div><table class="food-table"><thead><tr><th>地区</th><th>值得尝</th><th>建议</th></tr></thead><tbody>
+<tr><td>忻州</td><td>莜面、抿尖、碗托、瓦酥、羊杂</td><td>古城近处解决，服务恢复日。</td></tr>
+<tr><td>太原</td><td>晋菜、系统面食</td><td>9/30晚餐以酒店周边为主；山西会馆另作备选。</td></tr>
+<tr><td>壶口 / 吉县</td><td>黄河鲤鱼、黄河虾、黄米年糕</td><td><a href="https://gs.ctrip.com/html5/you/foods/fooddetail/2040714/16450747.html">冯记鱼府</a>可作备选，按当日排队决定。</td></tr>
+<tr><td>运城</td><td>河东菜、饼类、晋南家常菜</td><td>选择清淡河东菜或晋南家常菜。</td></tr>
+</tbody></table>
+<div class="decision"><b>三人点菜参考</b>：1个特色主食 + 1个荤菜 + 1个蔬菜 + 汤 / 凉菜。</div>
+</section>
+<section class="section" id="before"><div class="kicker">07 · Before departure</div><h2 class="section-title">临行前核对</h2>
+<table class="hotel-table"><thead><tr><th>时间窗</th><th>检查</th><th>影响</th></tr></thead><tbody>
+<tr><td>约9/12起</td><td><a href="https://www.dt.gov.cn/dt12345/rxdt1/202604/29b73c0aa08148e3baca536eb7166bb9.shtml">锁9/27云冈预约</a></td><td>官方预约周期为提前15日；中秋最后一天客流高。</td></tr>
+<tr><td>9/21前后</td><td><a href="https://www.byhs.net.cn/culture_detial/204.html">核悬空寺登临票与最新检票规则</a></td><td>如计划登临，按7日窗口确认票务；奶奶以山下观景为主。</td></tr>
+<tr><td>9/26前后</td><td><a href="https://www.sxwbs.com/detail/c95995bbface491e8679605ac0a64ca2?contentType=1&amp;t=MjAyNi0wMy0yNg%3D%3D">锁10/3小西天实名预约</a></td><td>国庆高峰，预约失败会直接改变10/3。</td></tr>
+<tr><td>9/22-9/28</td><td>查山西国庆高速、平遥/壶口/小西天专项交通公告</td><td>确认当年入口、停车和临时管制。</td></tr>
+<tr><td>出发前7-10天</td><td>看天气趋势</td><td>用于调整穿衣和雨具。</td></tr>
+<tr><td>每天前一晚</td><td>看次日路况 + 景区公告 + 奶奶恢复状态</td><td>据此调整次日机动项。</td></tr>
+</tbody></table>
+<div class="rule"></div><h3>随车与随身</h3><div class="checklist"><p>三人身份证原件；关键预约截图离线保存。</p><p>高德 + 百度都保留；提前下载山西离线地图。</p><p>车载快充、充电宝、手机数据线。</p><p>薄长袖 + 中层 + 轻防风防雨外套；奶奶多一层暖中层。</p><p>已经磨合好的防滑鞋。</p><p>小瓶水、纸巾、湿巾、一次性雨衣。</p><p>坚果、小面包、巧克力等转场日备用零食。</p></div>
+</section>
+<section class="section"><div class="kicker">08 · Sources</div><h2 class="section-title">信息来源</h2><ul class="sources">
+<li><a href="https://big5.www.gov.cn/gate/big5/www.gov.cn/gongbao/2025/issue_12406/202511/content_7048922.html">国务院办公厅：2026年部分节假日安排</a></li><li><a href="https://www.dt.gov.cn/dt12345/rxdt1/202604/29b73c0aa08148e3baca536eb7166bb9.shtml">云冈石窟：2026预约周期调整</a></li><li><a href="https://www.byhs.net.cn/culture_detial/204.html">恒山景区：2026悬空寺登临票须知</a></li><li><a href="https://www.byhs.net.cn/Travel_Guide/1.html">恒山景区：悬空寺 / 永安寺 / 圆觉寺票务与摆渡</a></li><li><a href="https://www.sxwbs.com/detail/c95995bbface491e8679605ac0a64ca2?contentType=1&amp;t=MjAyNi0wMy0yNg%3D%3D">小西天：2026实名预约说明</a></li><li><a href="https://www.yuncheng.gov.cn/doc/2020/07/21/71097.shtml">运城市政府：永乐宫参观提示（含殿内禁摄）</a></li></ul>
+<div class="footer">景区开放、交通管制、天气、票价、餐厅营业和酒店房型以临行前官方 / 平台最新信息与实际订单为准。</div></section>
+</main>
+<script defer="" src="weather-progressive.js"></script></body></html>

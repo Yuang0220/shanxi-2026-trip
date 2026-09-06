@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -22,65 +22,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Import V7 high-resolution assets once
-        if: ${{ hashFiles('.v7-assets-imported') == '' }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          URL='https://sdmntprkoreacentral.oaiusercontent.com/files/00000000-395c-8206-8ec4-c86ba25a5c15/raw?se=2026-09-06T02%3A18%3A33Z&sp=r&sv=2026-02-06&sr=b&scid=bb7c2162-78c6-578e-b2c2-d20ed3244dd3&skoid=0765b554-4b90-4fa2-9d6d-0055a2427910&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-06T00%3A12%3A13Z&ske=2026-09-07T00%3A12%3A13Z&sks=b&skv=2026-02-06&sig=CLEZCglVMwl/5JJlrINAcL6Cl8GS6vg5xyH/1SIgD3w%3D'
-          curl --fail --location --show-error --silent --retry 5 --retry-delay 2 --retry-all-errors \
-            "$URL" -o /tmp/shanxi-v7.zip
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('/tmp/shanxi-v7.zip')
-          print('downloaded bytes:',p.stat().st_size)
-          if p.read_bytes()[:2] != b'PK':
-              raise SystemExit('Bootstrap download is not a ZIP file')
-          PY
-          unzip -t /tmp/shanxi-v7.zip >/dev/null
-          rm -rf /tmp/shanxi-v7
-          mkdir -p /tmp/shanxi-v7
-          unzip -q /tmp/shanxi-v7.zip -d /tmp/shanxi-v7
-
-          rm -rf .site-src assets/curated assets/images
-          rm -f weather.js weather-rich.js
-          mkdir -p assets/images
-          cp -a /tmp/shanxi-v7/assets/images/. assets/images/
-          cp /tmp/shanxi-v7/with-images.html with-images.html
-          cp /tmp/shanxi-v7/weather-progressive.js weather-progressive.js
-          cp /tmp/shanxi-v7/index.html index.html
-          cp /tmp/shanxi-v7/text-only.html text-only.html
-          cp /tmp/shanxi-v7/README-部署说明.txt README-部署说明.txt
-          touch .v7-assets-imported
-
-          test "$(find assets/images -type f | wc -l)" -ge 16
-          test -s assets/images/xuankongsi-01.webp
-          test -s assets/images/yingxian-muta-01.webp
-          test -s assets/images/jinci-01.webp
-          test -s assets/images/hukou-01.webp
-
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          if ! git diff --cached --quiet; then
-            git commit -m 'Import V7 high-resolution travel guide assets'
-            git push origin HEAD:main
-          fi
 
       - name: Build final static site
         shell: bash
         run: |
           set -euo pipefail
           rm -rf _site
-          mkdir -p _site
-          cp index.html with-images.html weather-progressive.js _site/
-          cp text-only.html _site/
-          if [ -f favicon.svg ]; then cp favicon.svg _site/; fi
-          if [ -f 404.html ]; then cp 404.html _site/; fi
           mkdir -p _site/assets
+
+          cp index.html with-images.html text-only.html weather-progressive.js _site/
+          [ ! -f favicon.svg ] || cp favicon.svg _site/
+          [ ! -f 404.html ] || cp 404.html _site/
           cp -R assets/images _site/assets/images
 
           test -s _site/with-images.html
@@ -90,16 +42,101 @@ jobs:
           test -s _site/assets/images/xuankongsi-01.webp
           test -s _site/assets/images/xuankongsi-02.webp
           test -s _site/assets/images/jinci-01.webp
+          test -s _site/assets/images/jinci-02.webp
+          test -s _site/assets/images/wangjia-dayuan-01.webp
           test -s _site/assets/images/hukou-01.webp
+          test -s _site/assets/images/shanxi-noodles-01.webp
+
           grep -q 'gallery-928' _site/with-images.html
           grep -q 'gallery-929' _site/with-images.html
           grep -q 'gallery-101' _site/with-images.html
           grep -q 'weather-progressive.js' _site/with-images.html
+          grep -q '当前天气参考' _site/with-images.html
           grep -q 'assets/images/xuankongsi-02.webp' _site/with-images.html
           ! grep -q 'data:image' _site/with-images.html
           ! grep -q 'commons.wikimedia.org' _site/with-images.html
 
+      - name: Responsive layout smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)"
+          test -n "$CHROME"
+          echo "Using $CHROME"
+
+          cat > _site/__audit.html <<'EOF'
+          <!doctype html><html><head><meta charset="utf-8"><title>AUDIT_RUNNING</title></head><body><pre id="results"></pre><script>
+          const widths=[1440,1200,980,430,390,375];
+          const results=[];
+          const fail=m=>results.push('FAIL '+m);
+          const pass=m=>results.push('PASS '+m);
+          function inspect(width){return new Promise(resolve=>{
+            const frame=document.createElement('iframe');
+            frame.style.cssText=`position:absolute;left:-20000px;top:0;width:${width}px;height:1400px;border:0`;
+            frame.src=`with-images.html?layout-audit=${width}`;
+            frame.onload=()=>setTimeout(()=>{
+              try{
+                const doc=frame.contentDocument, win=frame.contentWindow;
+                const viewport=win.innerWidth, scroll=doc.documentElement.scrollWidth;
+                if(scroll>viewport+1) fail(`${width}: horizontal overflow ${scroll}>${viewport}`);
+
+                const imgs=[...doc.images];
+                if(imgs.length<14) fail(`${width}: only ${imgs.length} images`);
+                const broken=imgs.filter(img=>!img.complete || img.naturalWidth===0);
+                if(broken.length) fail(`${width}: ${broken.length} broken images`);
+
+                if(doc.querySelectorAll('#stay tbody tr').length<7) fail(`${width}: hotel rows missing`);
+                if(doc.querySelectorAll('#food tbody tr').length<4) fail(`${width}: food rows missing`);
+                if(doc.querySelectorAll('.weather-grid .place').length<10) fail(`${width}: weather rows missing`);
+                if(!doc.querySelector('.gallery-928')) fail(`${width}: 9/28 gallery missing`);
+                if(!doc.querySelector('.gallery-929')) fail(`${width}: 9/29 gallery missing`);
+                if(!doc.querySelector('.gallery-101')) fail(`${width}: 10/1 gallery missing`);
+
+                const font=parseFloat(getComputedStyle(doc.body).fontSize);
+                if(font<15) fail(`${width}: body font too small (${font}px)`);
+
+                if(width>760){
+                  const g928=doc.querySelector('.gallery-928');
+                  const stacks=g928?[...g928.children]:[];
+                  if(stacks.length===2){
+                    const ws=stacks.map(x=>x.getBoundingClientRect().width);
+                    if(Math.abs(ws[0]-ws[1])>4) fail(`${width}: 9/28 columns uneven ${ws.join('/')}`);
+                  }
+                  for(const selector of ['.gallery-929','.gallery-101']){
+                    const figures=[...doc.querySelectorAll(`${selector} > figure`)];
+                    if(figures.length===3){
+                      const ws=figures.map(x=>x.getBoundingClientRect().width);
+                      if(Math.max(...ws)-Math.min(...ws)>4) fail(`${width}: ${selector} columns uneven ${ws.join('/')}`);
+                    }
+                  }
+                }
+                pass(`${width}: viewport=${viewport}, scroll=${scroll}, images=${imgs.length}`);
+              }catch(e){fail(`${width}: ${e.message}`)}
+              frame.remove();resolve();
+            },800);
+            document.body.append(frame);
+          })}
+          (async()=>{
+            for(const width of widths) await inspect(width);
+            document.getElementById('results').textContent=results.join('\n');
+            document.title=results.some(x=>x.startsWith('FAIL'))?'AUDIT_FAIL':'AUDIT_OK';
+          })();
+          </script></body></html>
+          EOF
+
+          python3 -m http.server 4173 --directory _site >/tmp/shanxi-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          sleep 1
+          "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars \
+            --virtual-time-budget=20000 --dump-dom http://127.0.0.1:4173/__audit.html > /tmp/layout-audit.html
+          grep -q '<title>AUDIT_OK</title>' /tmp/layout-audit.html
+          ! grep -q 'FAIL ' /tmp/layout-audit.html
+          sed -n '/PASS /p' /tmp/layout-audit.html
+          rm _site/__audit.html
+
       - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -108,27 +145,36 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify live Pages build
+      - name: Verify deployed files
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -euo pipefail
-          fetch_live() {
+          fetch_live(){
             local path="$1" out="$2"
             curl --fail --location --silent --show-error --retry 10 --retry-delay 2 --retry-all-errors \
-              "${PAGE_URL}${path}?sha=${GITHUB_SHA}" -o "$out"
+              "${PAGE_URL}${path}?build=${GITHUB_SHA}" -o "$out"
           }
+
+          fetch_live index.html /tmp/live-index.html
           fetch_live with-images.html /tmp/live-with-images.html
+          fetch_live text-only.html /tmp/live-text-only.html
           fetch_live assets/images/xuankongsi-01.webp /tmp/live-xuankongsi.webp
           fetch_live assets/images/yingxian-muta-01.webp /tmp/live-muta.webp
           fetch_live assets/images/hukou-01.webp /tmp/live-hukou.webp
 
+          cmp _site/index.html /tmp/live-index.html
           cmp _site/with-images.html /tmp/live-with-images.html
-          test "$(stat -c%s /tmp/live-xuankongsi.webp)" -gt 500000
-          test "$(stat -c%s /tmp/live-muta.webp)" -gt 300000
-          test "$(stat -c%s /tmp/live-hukou.webp)" -gt 250000
+          cmp _site/text-only.html /tmp/live-text-only.html
+          cmp _site/assets/images/xuankongsi-01.webp /tmp/live-xuankongsi.webp
+          cmp _site/assets/images/yingxian-muta-01.webp /tmp/live-muta.webp
+          cmp _site/assets/images/hukou-01.webp /tmp/live-hukou.webp
+
           grep -q '9/28' /tmp/live-with-images.html
           grep -q '当前天气参考' /tmp/live-with-images.html
           grep -q 'gallery-928' /tmp/live-with-images.html
+          grep -q 'gallery-929' /tmp/live-with-images.html
+          grep -q 'gallery-101' /tmp/live-with-images.html
+          ! grep -q 'commons.wikimedia.org' /tmp/live-with-images.html
           echo "LIVE_OK ${PAGE_URL}"

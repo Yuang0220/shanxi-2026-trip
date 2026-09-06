@@ -30,9 +30,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          URL='https://1drv.ms/u/c/D829AC4D92B78E50/IQD46cp8ndUZQZcGnrKa7tV8AevxfItifUF2xqFlcH4DMxY?download=1'
+          URL='https://sdmntprkoreacentral.oaiusercontent.com/files/00000000-395c-8206-8ec4-c86ba25a5c15/raw?se=2026-09-06T02%3A18%3A33Z&sp=r&sv=2026-02-06&sr=b&scid=bb7c2162-78c6-578e-b2c2-d20ed3244dd3&skoid=0765b554-4b90-4fa2-9d6d-0055a2427910&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-06T00%3A12%3A13Z&ske=2026-09-07T00%3A12%3A13Z&sks=b&skv=2026-02-06&sig=CLEZCglVMwl/5JJlrINAcL6Cl8GS6vg5xyH/1SIgD3w%3D'
           curl --fail --location --show-error --silent --retry 5 --retry-delay 2 --retry-all-errors \
-            -A 'Mozilla/5.0' "$URL" -o /tmp/shanxi-v7.zip
+            "$URL" -o /tmp/shanxi-v7.zip
           python3 - <<'PY'
           from pathlib import Path
           p=Path('/tmp/shanxi-v7.zip')
